@@ -1,4 +1,3 @@
-
 public class TetrisBrain {
 
 	private Piece curPiece;
@@ -8,6 +7,10 @@ public class TetrisBrain {
 	private int boardWidth;
 	private int boardHeight;
 
+	/**
+	 * 
+	 * @param direction move direction
+	 */
 	public void movePiece(TetrisDirectionsEnum direction) {
 		Piece ghostPiece = ghostMove(curPiece, direction);
 		if (isOutOfBounds(ghostPiece)) {
@@ -19,19 +22,31 @@ public class TetrisBrain {
 		} else {
 			curPiece = ghostPiece;
 		}
-		// notify fronten
+		// TODO notify front-end
 	}
 
-	private Piece ghostMove(Piece piece, TetrisDirectionsEnum direction) {
-		return null;
+	/**
+	 * 
+	 * @param piece     to be moved.
+	 * @param direction move direction.
+	 * @return new piece that moved in the given direction.
+	 */
+	private Piece ghostMove(final Piece piece, TetrisDirectionsEnum direction) {
+		return piece.move(direction);
 	}
 
+	/**
+	 * 
+	 * @param piece to be checked if it is out of bounds (left-right bounds).
+	 * @return {@code true} if <b>piece</b> is out of bounds, {@code false}
+	 *         otherwise.
+	 */
 	private boolean isOutOfBounds(Piece piece) {
-		return false;
+		return tetrisBoard.isOutOfBounds(piece);
 	}
 
 	private void placePiece(Piece piece) {
-		// add the piece to the board
+		tetrisBoard.placePiece(piece);
 		if (isGameFinished()) {
 			finishGame();
 		} else {
@@ -40,7 +55,7 @@ public class TetrisBrain {
 	}
 
 	private void finishGame() {
-
+		// TODO implement this method
 	}
 
 	private void checkRows() {
@@ -53,32 +68,37 @@ public class TetrisBrain {
 	}
 
 	public void deleteRow(int rowNumber) {
+		tetrisBoard.deleteRow(rowNumber);
 	}
 
 	public void rotatePiece(TetrisDirectionsEnum direction) {
+		curPiece.rotate(direction);
 	}
 
 	public Piece getRandomPiece() {
+		// TODO implement this method
 		return null;
 	}
 
 	public boolean isHit(final Piece piece) {
-		return false;
+		return tetrisBoard.isHit(piece);
 	}
 
 	public boolean isGameFinished() {
+		// TODO implement this method
 		return false;
 	}
 
 	public boolean isRowFull(int rowNumber) {
-		return false;
+		return tetrisBoard.isRowFull(rowNumber);
 	}
 
 	public boolean isRowEmpty(int rowNumber) {
-		return false;
+		return tetrisBoard.isRowEmpty(rowNumber);
 	}
 
 	public void collapseRows() {
+		tetrisBoard.collapseRows();
 	}
 
 }
