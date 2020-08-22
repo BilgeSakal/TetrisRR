@@ -1,6 +1,10 @@
 
 public class Piece {
 
+	/**
+	 * 
+	 * @param direction
+	 */
 	public void rotate(TetrisDirectionsEnum direction) {
 		// TODO implement this method
 	}
