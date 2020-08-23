@@ -5,7 +5,7 @@ public class Piece {
 	
 	Square squares[] = new Square[numOfSquares];
 		
-	public void rotate(ShapeEnum shape) {
+	public void rotate(TetrisShapesEnum shape) {
 		switch (shape) {
 		case SQUARED:
 			break;

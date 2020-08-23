@@ -71,8 +71,8 @@ public class TetrisBrain {
 		tetrisBoard.deleteRow(rowNumber);
 	}
 
-	public void rotatePiece(TetrisDirectionsEnum direction) {
-		curPiece.rotate(direction);
+	public void rotatePiece(TetrisShapesEnum shape) {
+		curPiece.rotate(shape);
 	}
 
 	public Piece getRandomPiece() {
