@@ -1,3 +1,4 @@
+import piece.Piece;
 
 public class TetrisBoard {
 

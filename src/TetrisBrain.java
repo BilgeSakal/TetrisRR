@@ -1,3 +1,6 @@
+import enums.TetrisDirectionsEnum;
+import piece.Piece;
+
 public class TetrisBrain {
 
 	private Piece curPiece;
