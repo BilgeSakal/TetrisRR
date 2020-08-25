@@ -1,11 +1,45 @@
 package piece;
 
+import java.util.Random;
+
 public class PieceT extends Piece {
+	
+	/*
+	 *    1      1 0 2      1      1
+	 *    0 2      3      2 0    2 0 3
+	 *    3                 3
+	 */
 
 	@Override
 	public void generatePiece() {
-		// TODO Auto-generated method stub
-
+		Random random = new Random();
+		int r = random.nextInt(4);
+		switch (r) {
+		case 0:
+			piecePoints[0] = new BoardPoint(boardwidth / 2, 1);
+			piecePoints[1] = new BoardPoint(boardwidth / 2, 0);
+			piecePoints[2] = new BoardPoint(boardwidth / 2 + 1, 1);
+			piecePoints[3] = new BoardPoint(boardwidth / 2, 2);
+			break;
+		case 1:
+			piecePoints[0] = new BoardPoint(boardwidth / 2, 0);
+			piecePoints[1] = new BoardPoint(boardwidth / 2 - 1, 0);
+			piecePoints[2] = new BoardPoint(boardwidth / 2 + 1, 0);
+			piecePoints[3] = new BoardPoint(boardwidth / 2, 1);
+			break;
+		case 2:
+			piecePoints[0] = new BoardPoint(boardwidth / 2, 1);
+			piecePoints[1] = new BoardPoint(boardwidth / 2, 0);
+			piecePoints[2] = new BoardPoint(boardwidth / 2 - 1, 1);
+			piecePoints[3] = new BoardPoint(boardwidth / 2, 2);
+			break;
+		case 3:
+			piecePoints[0] = new BoardPoint(boardwidth / 2, 1);
+			piecePoints[1] = new BoardPoint(boardwidth / 2, 0);
+			piecePoints[2] = new BoardPoint(boardwidth / 2 - 1, 1);
+			piecePoints[3] = new BoardPoint(boardwidth / 2 + 1, 1);
+			break;
+		}
 	}
 
 }

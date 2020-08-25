@@ -13,13 +13,33 @@ public class BoardPoint {
 	public void incrementX() {
 		setX(x + 1);
 	}
+	
+	public void incrementX(int n) {
+		setX(x + n);
+	}
 
 	public void decrementX() {
 		setX(x - 1);
 	}
+	
+	public void decrementX(int n) {
+		setX(x - n);
+	}
 
 	public void incrementY() {
 		setY(y + 1);
+	}
+	
+	public void incrementY(int n) {
+		setY(y + n);
+	}
+	
+	public void decrementY() {
+		setY(y - 1);
+	}
+	
+	public void decrementY(int n) {
+		setY(y - n);
 	}
 
 	// GETTERS AND SETTERS
