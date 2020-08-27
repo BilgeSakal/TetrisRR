@@ -10,7 +10,6 @@ public class PieceT extends Piece {
 
 	@Override
 	public void generatePiece() {
-		super.generatePiece();
 		switch (r) {
 		case 0:
 			piecePoints[0] = new BoardPoint(boardwidth / 2, 1);

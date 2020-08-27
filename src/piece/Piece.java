@@ -11,6 +11,8 @@ public abstract class Piece {
 	protected BoardPoint[] piecePoints;
 
 	public Piece() {
+		Random random = new Random();
+		r = random.nextInt(4);
 		generatePiece();
 	}
 	
@@ -22,10 +24,7 @@ public abstract class Piece {
 	/**
 	 * piecePoints arrayini oluþturmak için
 	 */
-	public void generatePiece() {
-		Random random = new Random();
-		int r = random.nextInt(4);
-	}
+	public abstract void generatePiece();
 
 	/**
 	 * 
