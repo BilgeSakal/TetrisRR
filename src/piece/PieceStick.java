@@ -1,7 +1,5 @@
 package piece;
 
-import java.util.Random;
-
 public class PieceStick extends Piece {
 	
 	/*
@@ -13,9 +11,8 @@ public class PieceStick extends Piece {
 
 	@Override
 	public void generatePiece() {
-		Random random = new Random();
-		int r = random.nextInt(4);
-		switch (r) {
+		super.generatePiece();
+		switch (r % 2) {
 		case 0:
 			piecePoints[0] = new BoardPoint(boardwidth / 2, 1);
 			piecePoints[1] = new BoardPoint(boardwidth / 2, 0);
