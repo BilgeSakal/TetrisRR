@@ -3,9 +3,9 @@ package piece;
 public class PieceL extends Piece {
 	
 	/*
-	 *    1
-	 *    0
-	 *    2 3
+	 *    X
+	 *    X
+	 *    X X
 	 */
 
 	@Override
