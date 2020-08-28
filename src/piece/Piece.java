@@ -61,7 +61,6 @@ public abstract class Piece {
 	 * @return             90 degrees rotated "Piece" object
 	 */
 	public Piece rotate(TetrisDirectionsEnum direction) { // TODO  TEST IT
-		// STEP 1: Create new piece.
 		Piece newPiece = null;
 		try {
 			newPiece = (Piece) clone();
@@ -69,54 +68,39 @@ public abstract class Piece {
 			e.printStackTrace();
 		}
 		
-		// STEP 2: Change the all integers to double data type.
-		int n = piecePoints.length;
-		DoubleBoardPoint[] doublePiecePoints = new DoubleBoardPoint[n];
-		for (int i = 0; i < n; ++i) {
-			doublePiecePoints[i] = new DoubleBoardPoint(piecePoints[i].getX(), piecePoints[i].getY());
-		}
-		
-		// STEP 3: Find center of piece using find averages of all the x and y coordinates.
 		double xWeight = 0;
 		double yWeight = 0;
-		for (int i = 0; i < n; ++i) {
-			xWeight += doublePiecePoints[i].getX();
-			yWeight += doublePiecePoints[i].getY();
+		for (int i = 0; i < piecePoints.length; ++i) {
+			xWeight += (double) piecePoints[i].getX();
+			yWeight += (double) piecePoints[i].getY();
 		}
-		xWeight /= n;
-		yWeight /= n;
+		xWeight /= piecePoints.length;
+		yWeight /= piecePoints.length;
 		
-		// STEP 4: Shift all coordinates with the center of the piece is origin.
-		for (int i = 0; i < n; ++i) {
-			doublePiecePoints[i].decrementX(xWeight);
-			doublePiecePoints[i].decrementY(yWeight);
-		}
-		
-		// STEP 5: Rotate the piece 90 degrees from the origin.
-		for (int i = 0; i < n; ++i) {
-			double temp = doublePiecePoints[i].getX();
+		for (int i = 0; i < piecePoints.length; ++i) {
+			double x = (double) piecePoints[i].getX();
+			double y = (double) piecePoints[i].getY();
+			x -= xWeight; y -= yWeight;
+			
+			double temp = x;
 			switch (direction) {
 			case LEFT:
-				doublePiecePoints[i].setX(-doublePiecePoints[i].getY());
-				doublePiecePoints[i].setY(temp);
+				x = -y;
+				y = temp;
 				break;
 			case RIGHT:
-				doublePiecePoints[i].setX(doublePiecePoints[i].getY());
-				doublePiecePoints[i].setY(-temp);
+				x = y;
+				y = -temp;
 				break;
 			default:
 				break;
 			}
+			
+			x += xWeight;
+			y += yWeight;
+			
+			newPiece.piecePoints[i] = new BoardPoint((int) x, (int) y);
 		}
-		
-		// STEP 6: Shift all coordinates to the real locations and move those the new piece as integer.
-		for (int i = 0; i < n; ++i) {
-			doublePiecePoints[i].incrementX(xWeight);
-			doublePiecePoints[i].incrementY(yWeight);
-			newPiece.piecePoints[i] = new BoardPoint((int)doublePiecePoints[i].getX(), (int)doublePiecePoints[i].getY());
-		}
-		
-		// STEP 7: Return the new piece.
 		return newPiece;
 	}
 
