@@ -3,8 +3,8 @@ package piece;
 public class PieceSquare extends Piece {
 	
 	/*
-	 *    0 1
-	 *    2 3
+	 *    X X
+	 *    X X
 	 */
 
 	@Override

@@ -7,13 +7,38 @@ import enums.TetrisDirectionsEnum;
 public abstract class Piece {
 	
 	public static int boardwidth = 12;
-	protected int r = -1;
 	protected BoardPoint[] piecePoints;
 
 	public Piece() {
 		Random random = new Random();
-		r = random.nextInt(4);
+		int r = random.nextInt(4);
+		piecePoints = new BoardPoint[4];
 		generatePiece();
+		
+		// Rotates the piece randomly.
+		for (int i = 0; i < r; ++i) {
+			rotate(TetrisDirectionsEnum.RIGHT);
+		}
+		
+		// Fixes the coordinates if there are negative y coordinates.
+		while (isThereNegativeAtY()) {
+			move(TetrisDirectionsEnum.DOWN);
+		}
+	}
+	
+	/**
+	 * This method determines if there is at least one negative value at y 
+	 * coordinate or not. This method assists the constructor of this class.
+	 * 
+	 * @return    boolean result
+	 */
+	private boolean isThereNegativeAtY() {
+		for (int i = 0; i < piecePoints.length; ++i) {
+			if (piecePoints[i].getY() < 0) {
+				return true;
+			}
+		}
+		return false;
 	}
 	
 	@Override
@@ -27,11 +52,16 @@ public abstract class Piece {
 	public abstract void generatePiece();
 
 	/**
+	 * Rotates the copy of "Piece" and returns rotated "Piece" object.
 	 * 
-	 * @param direction
+	 * @param direction    direction of the rotation
+	 *                     RIGHT means clockwise
+	 *                     LEFT means counter clockwise
+	 *                     
+	 * @return             90 degrees rotated "Piece" object
 	 */
-	public Piece rotate(TetrisDirectionsEnum direction) {
-		// TODO  Henüz test etmedim, test edilmesi gerekiyor, yanlýþ olabilir.
+	public Piece rotate(TetrisDirectionsEnum direction) { // TODO  TEST IT
+		// STEP 1: Create new piece.
 		Piece newPiece = null;
 		try {
 			newPiece = (Piece) clone();
@@ -39,39 +69,63 @@ public abstract class Piece {
 			e.printStackTrace();
 		}
 		
-		// STEP 0: Find distances to make future operations simply.
-		int xDistance = piecePoints[0].getX();
-		int yDistance = piecePoints[0].getY();
+		// STEP 2: Change the all integers to double data type.
+		int n = piecePoints.length;
+		DoubleBoardPoint[] doublePiecePoints = new DoubleBoardPoint[n];
+		for (int i = 0; i < n; ++i) {
+			doublePiecePoints[i] = new DoubleBoardPoint(piecePoints[i].getX(), piecePoints[i].getY());
+		}
 		
-		for (int i = 1; i < piecePoints.length; ++i) {
-			// STEP 1: Subtract the points to rotate them from the origin.
-			piecePoints[i].decrementX(xDistance);
-			piecePoints[i].decrementY(yDistance);
-			
-			// STEP 2: Rotate from origin.
-			// For  90 degrees clockwise, (x,y) -> (-y,x)
-			// For 270 degrees clockwise, (x,y) -> (y,-x), (or 90 degrees counter clockwise)
-			int temp = piecePoints[i].getX();
+		// STEP 3: Find center of piece using find averages of all the x and y coordinates.
+		double xWeight = 0;
+		double yWeight = 0;
+		for (int i = 0; i < n; ++i) {
+			xWeight += doublePiecePoints[i].getX();
+			yWeight += doublePiecePoints[i].getY();
+		}
+		xWeight /= n;
+		yWeight /= n;
+		
+		// STEP 4: Shift all coordinates with the center of the piece is origin.
+		for (int i = 0; i < n; ++i) {
+			doublePiecePoints[i].decrementX(xWeight);
+			doublePiecePoints[i].decrementY(yWeight);
+		}
+		
+		// STEP 5: Rotate the piece 90 degrees from the origin.
+		for (int i = 0; i < n; ++i) {
+			double temp = doublePiecePoints[i].getX();
 			switch (direction) {
 			case LEFT:
-				piecePoints[i].setX(-temp);
-				piecePoints[i].setY(piecePoints[i].getX());
+				doublePiecePoints[i].setX(-doublePiecePoints[i].getY());
+				doublePiecePoints[i].setY(temp);
 				break;
 			case RIGHT:
-				piecePoints[i].setX(-piecePoints[i].getY());
-				piecePoints[i].setY(temp);
+				doublePiecePoints[i].setX(doublePiecePoints[i].getY());
+				doublePiecePoints[i].setY(-temp);
 				break;
 			default:
 				break;
 			}
-			
-			// STEP 3: Turn them to the real points using addition operation.
-			piecePoints[i].incrementX(xDistance);
-			piecePoints[i].incrementY(yDistance);
 		}
+		
+		// STEP 6: Shift all coordinates to the real locations and move those the new piece as integer.
+		for (int i = 0; i < n; ++i) {
+			doublePiecePoints[i].incrementX(xWeight);
+			doublePiecePoints[i].incrementY(yWeight);
+			newPiece.piecePoints[i] = new BoardPoint((int)doublePiecePoints[i].getX(), (int)doublePiecePoints[i].getY());
+		}
+		
+		// STEP 7: Return the new piece.
 		return newPiece;
 	}
 
+	/**
+	 * Moves the copy of "Piece" and returns moved "Piece" object.
+	 * 
+	 * @param direction    direction of the rotation
+	 * @return             90 degrees moved "Piece" object
+	 */
 	public Piece move(TetrisDirectionsEnum direction) {
 		Piece newPiece = null;
 		try {
