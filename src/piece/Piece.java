@@ -70,15 +70,15 @@ public abstract class Piece {
 		double xWeight = 0;
 		double yWeight = 0;
 		for (int i = 0; i < piecePoints.length; ++i) {
-			xWeight += (double) piecePoints[i].getX();
-			yWeight += (double) piecePoints[i].getY();
+			xWeight += piecePoints[i].getX();
+			yWeight += piecePoints[i].getY();
 		}
 		xWeight /= piecePoints.length;
 		yWeight /= piecePoints.length;
 
 		for (int i = 0; i < piecePoints.length; ++i) {
-			double x = (double) piecePoints[i].getX();
-			double y = (double) piecePoints[i].getY();
+			double x = piecePoints[i].getX();
+			double y = piecePoints[i].getY();
 			x -= xWeight;
 			y -= yWeight;
 
@@ -136,6 +136,8 @@ public abstract class Piece {
 		}
 		return newPiece;
 	}
+
+	// GETTERS AND SETTERS
 
 	public BoardPoint[] getPiecePoints() {
 		return piecePoints;
