@@ -146,4 +146,8 @@ public class TetrisBoard {
 		this.boardWidht = boardWidht;
 	}
 
+	public boolean[][] getBoard() {
+		return board;
+	}
+
 }

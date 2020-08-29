@@ -10,6 +10,12 @@ public class BoardPoint {
 		setY(y);
 	}
 
+	@Override
+	protected Object clone() throws CloneNotSupportedException {
+		BoardPoint point = new BoardPoint(x, y);
+		return point;
+	}
+
 	public void incrementX() {
 		setX(x + 1);
 	}
