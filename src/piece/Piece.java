@@ -47,7 +47,7 @@ public abstract class Piece {
 	}
 
 	/**
-	 * piecePoints arrayini oluþturmak için
+	 * piecePoints arrayini oluï¿½turmak iï¿½in
 	 */
 	public abstract void generatePiece();
 
