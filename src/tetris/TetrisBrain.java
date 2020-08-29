@@ -1,7 +1,17 @@
 package tetris;
 
+import java.util.Random;
+
 import enums.TetrisDirectionsEnum;
+import enums.TetrisPieceEnum;
 import piece.Piece;
+import piece.PieceJ;
+import piece.PieceL;
+import piece.PieceS;
+import piece.PieceSquare;
+import piece.PieceStick;
+import piece.PieceT;
+import piece.PieceZ;
 
 public class TetrisBrain {
 
@@ -11,6 +21,8 @@ public class TetrisBrain {
 	private DropTimer dropTimer;
 	private int boardWidth;
 	private int boardHeight;
+	private Random random = new Random();
+	private static final int PIECE_COUNT = 7;
 
 	/**
 	 * 
@@ -81,8 +93,46 @@ public class TetrisBrain {
 	}
 
 	public Piece getRandomPiece() {
-		// TODO implement this method
-		return null;
+		TetrisPieceEnum randomSelection = TetrisPieceEnum.randomPiece();
+		Piece randomPiece = null;
+		switch (randomSelection) {
+		case J: {
+			randomPiece = new PieceJ();
+			break;
+		}
+		case L: {
+			randomPiece = new PieceL();
+			break;
+		}
+		case S: {
+			randomPiece = new PieceS();
+			break;
+		}
+		case Square: {
+			randomPiece = new PieceSquare();
+			break;
+		}
+		case Stick: {
+			randomPiece = new PieceStick();
+			break;
+		}
+		case T: {
+			randomPiece = new PieceT();
+			break;
+		}
+		case Z: {
+			randomPiece = new PieceZ();
+			break;
+		}
+		}
+		int randomRotate = random.nextInt(4);
+		for (int i = 0; i < randomRotate; ++i) {
+			randomPiece = randomPiece.rotate(TetrisDirectionsEnum.RIGHT);
+		}
+		while (randomPiece.isThereNegativeAtY()) {
+			randomPiece = randomPiece.move(TetrisDirectionsEnum.DOWN);
+		}
+		return randomPiece;
 	}
 
 	public boolean isHit(final Piece piece) {

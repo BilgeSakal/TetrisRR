@@ -1,20 +1,23 @@
 package piece;
 
+import java.util.ArrayList;
+
 public class PieceStick extends Piece {
-	
-	/*
-	 *    X
-	 *    X
-	 *    X
-	 *    X
-	 */
 
 	@Override
 	public void generatePiece() {
-		piecePoints[0] = new BoardPoint(boardwidth / 2, 0);
-		piecePoints[1] = new BoardPoint(boardwidth / 2, 1);
-		piecePoints[2] = new BoardPoint(boardwidth / 2, 2);
-		piecePoints[3] = new BoardPoint(boardwidth / 2, 3);
+		piecePoints.add(new BoardPoint(boardwidth / 2, 0));
+		piecePoints.add(new BoardPoint(boardwidth / 2, 1));
+		piecePoints.add(new BoardPoint(boardwidth / 2, 2));
+		piecePoints.add(new BoardPoint(boardwidth / 2, 3));
+
+	}
+
+	@Override
+	protected Object clone() {
+		Piece pieceClone = new PieceL();
+		pieceClone.setPiecePoints((ArrayList<BoardPoint>) this.piecePoints.clone());
+		return pieceClone;
 	}
 
 }

@@ -1,29 +1,17 @@
 package piece;
 
-import java.util.Random;
+import java.util.ArrayList;
 
 import enums.TetrisDirectionsEnum;
 
 public abstract class Piece {
 
 	public static int boardwidth = 12;
-	protected BoardPoint[] piecePoints;
+	protected ArrayList<BoardPoint> piecePoints;
 
 	public Piece() {
-		Random random = new Random();
-		int r = random.nextInt(4);
-		piecePoints = new BoardPoint[4];
+		piecePoints = new ArrayList<BoardPoint>();
 		generatePiece();
-
-		// Rotates the piece randomly.
-		for (int i = 0; i < r; ++i) {
-			rotate(TetrisDirectionsEnum.RIGHT);
-		}
-
-		// Fixes the coordinates if there are negative y coordinates.
-		while (isThereNegativeAtY()) {
-			move(TetrisDirectionsEnum.DOWN);
-		}
 	}
 
 	/**
@@ -32,22 +20,17 @@ public abstract class Piece {
 	 * 
 	 * @return boolean result
 	 */
-	private boolean isThereNegativeAtY() {
-		for (int i = 0; i < piecePoints.length; ++i) {
-			if (piecePoints[i].getY() < 0) {
+	public boolean isThereNegativeAtY() {
+		for (int i = 0; i < piecePoints.size(); ++i) {
+			if (piecePoints.get(i).getY() < 0) {
 				return true;
 			}
 		}
 		return false;
 	}
 
-	@Override
-	protected Object clone() throws CloneNotSupportedException {
-		return super.clone();
-	}
-
 	/**
-	 * piecePoints arrayini olu�turmak i�in
+	 * Generates piecePoint array.
 	 */
 	public abstract void generatePiece();
 
@@ -69,16 +52,16 @@ public abstract class Piece {
 
 		double xWeight = 0;
 		double yWeight = 0;
-		for (int i = 0; i < piecePoints.length; ++i) {
-			xWeight += piecePoints[i].getX();
-			yWeight += piecePoints[i].getY();
+		for (int i = 0; i < piecePoints.size(); ++i) {
+			xWeight += piecePoints.get(i).getX();
+			yWeight += piecePoints.get(i).getY();
 		}
-		xWeight /= piecePoints.length;
-		yWeight /= piecePoints.length;
+		xWeight /= piecePoints.size();
+		yWeight /= piecePoints.size();
 
-		for (int i = 0; i < piecePoints.length; ++i) {
-			double x = piecePoints[i].getX();
-			double y = piecePoints[i].getY();
+		for (int i = 0; i < piecePoints.size(); ++i) {
+			double x = piecePoints.get(i).getX();
+			double y = piecePoints.get(i).getY();
 			x -= xWeight;
 			y -= yWeight;
 
@@ -99,7 +82,7 @@ public abstract class Piece {
 			x += xWeight;
 			y += yWeight;
 
-			newPiece.piecePoints[i] = new BoardPoint((int) x, (int) y);
+			newPiece.piecePoints.set(i, new BoardPoint((int) x, (int) y));
 		}
 		return newPiece;
 	}
@@ -119,18 +102,18 @@ public abstract class Piece {
 		}
 		switch (direction) {
 		case DOWN:
-			for (int i = 0; i < piecePoints.length; ++i) {
-				newPiece.piecePoints[i].incrementY();
+			for (BoardPoint point : newPiece.piecePoints) {
+				point.incrementY();
 			}
 			break;
 		case LEFT:
-			for (int i = 0; i < piecePoints.length; ++i) {
-				newPiece.piecePoints[i].decrementX();
+			for (BoardPoint point : newPiece.piecePoints) {
+				point.decrementX();
 			}
 			break;
 		case RIGHT:
-			for (int i = 0; i < piecePoints.length; ++i) {
-				newPiece.piecePoints[i].incrementX();
+			for (BoardPoint point : newPiece.piecePoints) {
+				point.incrementX();
 			}
 			break;
 		}
@@ -139,8 +122,12 @@ public abstract class Piece {
 
 	// GETTERS AND SETTERS
 
-	public BoardPoint[] getPiecePoints() {
+	public ArrayList<BoardPoint> getPiecePoints() {
 		return piecePoints;
+	}
+
+	protected void setPiecePoints(ArrayList<BoardPoint> piecePoints) {
+		this.piecePoints = piecePoints;
 	}
 
 }
