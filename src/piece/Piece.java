@@ -5,7 +5,7 @@ import java.util.Random;
 import enums.TetrisDirectionsEnum;
 
 public abstract class Piece {
-	
+
 	public static int boardwidth = 12;
 	protected BoardPoint[] piecePoints;
 
@@ -14,23 +14,23 @@ public abstract class Piece {
 		int r = random.nextInt(4);
 		piecePoints = new BoardPoint[4];
 		generatePiece();
-		
+
 		// Rotates the piece randomly.
 		for (int i = 0; i < r; ++i) {
 			rotate(TetrisDirectionsEnum.RIGHT);
 		}
-		
+
 		// Fixes the coordinates if there are negative y coordinates.
 		while (isThereNegativeAtY()) {
 			move(TetrisDirectionsEnum.DOWN);
 		}
 	}
-	
+
 	/**
-	 * This method determines if there is at least one negative value at y 
+	 * This method determines if there is at least one negative value at y
 	 * coordinate or not. This method assists the constructor of this class.
 	 * 
-	 * @return    boolean result
+	 * @return boolean result
 	 */
 	private boolean isThereNegativeAtY() {
 		for (int i = 0; i < piecePoints.length; ++i) {
@@ -40,7 +40,7 @@ public abstract class Piece {
 		}
 		return false;
 	}
-	
+
 	@Override
 	protected Object clone() throws CloneNotSupportedException {
 		return super.clone();
@@ -54,34 +54,34 @@ public abstract class Piece {
 	/**
 	 * Rotates the copy of "Piece" and returns rotated "Piece" object.
 	 * 
-	 * @param direction    direction of the rotation
-	 *                     RIGHT means clockwise
-	 *                     LEFT means counter clockwise
-	 *                     
-	 * @return             90 degrees rotated "Piece" object
+	 * @param direction direction of the rotation RIGHT means clockwise LEFT means
+	 *                  counter clockwise
+	 * 
+	 * @return 90 degrees rotated "Piece" object
 	 */
-	public Piece rotate(TetrisDirectionsEnum direction) { // TODO  TEST IT
+	public Piece rotate(TetrisDirectionsEnum direction) { // TODO TEST IT
 		Piece newPiece = null;
 		try {
 			newPiece = (Piece) clone();
 		} catch (CloneNotSupportedException e) {
 			e.printStackTrace();
 		}
-		
+
 		double xWeight = 0;
 		double yWeight = 0;
 		for (int i = 0; i < piecePoints.length; ++i) {
-			xWeight += (double) piecePoints[i].getX();
-			yWeight += (double) piecePoints[i].getY();
+			xWeight += piecePoints[i].getX();
+			yWeight += piecePoints[i].getY();
 		}
 		xWeight /= piecePoints.length;
 		yWeight /= piecePoints.length;
-		
+
 		for (int i = 0; i < piecePoints.length; ++i) {
-			double x = (double) piecePoints[i].getX();
-			double y = (double) piecePoints[i].getY();
-			x -= xWeight; y -= yWeight;
-			
+			double x = piecePoints[i].getX();
+			double y = piecePoints[i].getY();
+			x -= xWeight;
+			y -= yWeight;
+
 			double temp = x;
 			switch (direction) {
 			case LEFT:
@@ -95,10 +95,10 @@ public abstract class Piece {
 			default:
 				break;
 			}
-			
+
 			x += xWeight;
 			y += yWeight;
-			
+
 			newPiece.piecePoints[i] = new BoardPoint((int) x, (int) y);
 		}
 		return newPiece;
@@ -107,8 +107,8 @@ public abstract class Piece {
 	/**
 	 * Moves the copy of "Piece" and returns moved "Piece" object.
 	 * 
-	 * @param direction    direction of the rotation
-	 * @return             90 degrees moved "Piece" object
+	 * @param direction direction of the rotation
+	 * @return 90 degrees moved "Piece" object
 	 */
 	public Piece move(TetrisDirectionsEnum direction) {
 		Piece newPiece = null;
@@ -135,6 +135,12 @@ public abstract class Piece {
 			break;
 		}
 		return newPiece;
+	}
+
+	// GETTERS AND SETTERS
+
+	public BoardPoint[] getPiecePoints() {
+		return piecePoints;
 	}
 
 }
