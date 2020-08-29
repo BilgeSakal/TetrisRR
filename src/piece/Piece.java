@@ -1,5 +1,10 @@
+package piece;
+
+import enums.TetrisDirectionsEnum;
 
 public class Piece {
+
+	protected BoardPoint[] piecePoints;
 
 	/**
 	 * 
@@ -12,6 +17,12 @@ public class Piece {
 	public Piece move(TetrisDirectionsEnum direction) {
 		// TODO implement this method
 		return null;
+	}
+
+	// GETTERS AND SETTERS
+
+	public BoardPoint[] getPiecePoints() {
+		return piecePoints;
 	}
 
 }
