@@ -88,7 +88,7 @@ public class TetrisBoard {
 	/**
 	 * Replaces the row that specified with {@code rowNubmer} with the row above.
 	 * 
-	 * @param rowNumber to be collap
+	 * @param rowNumber to be collapsed
 	 */
 	private void collapseRow(int rowNumber) {
 		for (int i = 0; i < boardWidht; ++i) {
