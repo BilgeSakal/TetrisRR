@@ -1,3 +1,5 @@
+package tetris;
+
 import enums.TetrisDirectionsEnum;
 import piece.Piece;
 
