@@ -136,5 +136,9 @@ public abstract class Piece {
 		}
 		return newPiece;
 	}
+	
+	public BoardPoint[] getPiecePoints() {
+		return piecePoints;
+	}
 
 }
