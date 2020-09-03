@@ -3,6 +3,7 @@ package piece;
 import java.util.ArrayList;
 
 import enums.TetrisDirectionsEnum;
+import enums.TetrisPieceEnum;
 
 public abstract class Piece {
 
@@ -21,8 +22,8 @@ public abstract class Piece {
 	 * @return boolean result
 	 */
 	public boolean isThereNegativeAtY() {
-		for (int i = 0; i < piecePoints.size(); ++i) {
-			if (piecePoints.get(i).getY() < 0) {
+		for (BoardPoint p : piecePoints) {
+			if (p.getY() < 0) {
 				return true;
 			}
 		}
@@ -118,6 +119,41 @@ public abstract class Piece {
 			break;
 		}
 		return newPiece;
+	}
+
+	public static Piece getRandomPiece(TetrisPieceEnum randomSelection) {
+		Piece randomPiece = null;
+		switch (randomSelection) {
+		case J: {
+			randomPiece = new PieceJ();
+			break;
+		}
+		case L: {
+			randomPiece = new PieceL();
+			break;
+		}
+		case S: {
+			randomPiece = new PieceS();
+			break;
+		}
+		case Square: {
+			randomPiece = new PieceSquare();
+			break;
+		}
+		case Stick: {
+			randomPiece = new PieceStick();
+			break;
+		}
+		case T: {
+			randomPiece = new PieceT();
+			break;
+		}
+		case Z: {
+			randomPiece = new PieceZ();
+			break;
+		}
+		}
+		return randomPiece;
 	}
 
 	// GETTERS AND SETTERS

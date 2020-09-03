@@ -1,5 +1,7 @@
 package tetris;
 
+import java.util.Arrays;
+
 import piece.BoardPoint;
 import piece.Piece;
 
@@ -16,10 +18,10 @@ public class TetrisBoard {
 		this(DEFAULT_BOARD_WIDHT, DEFAULT_BOARD_LENGHT);
 	}
 
-	public TetrisBoard(int boardWidht, int boardLength) {
+	public TetrisBoard(int boardLength, int boardWidht) {
 		setBoardWidht(boardWidht);
 		setBoardLenght(boardLength);
-		board = new boolean[boardWidht][boardLength];
+		board = new boolean[boardLength][boardWidht];
 	}
 
 	/**
@@ -91,9 +93,7 @@ public class TetrisBoard {
 	 * @param rowNumber to be collapsed
 	 */
 	private void collapseRow(int rowNumber) {
-		for (int i = 0; i < boardWidht; ++i) {
-			board[rowNumber][i] = board[rowNumber - 1][i];
-		}
+		board[rowNumber] = Arrays.copyOf(board[rowNumber - 1], board.length);
 	}
 
 	/**
@@ -105,7 +105,7 @@ public class TetrisBoard {
 	 */
 	public boolean isOutOfBounds(Piece piece) {
 		for (BoardPoint p : piece.getPiecePoints()) {
-			if (p.getX() < 0 || p.getX() > boardWidht - 1) {
+			if (p.getY() > boardWidht - 1 || p.getY() < 0) {
 				return true;
 			}
 		}
@@ -121,7 +121,7 @@ public class TetrisBoard {
 	 */
 	public boolean isHit(Piece piece) {
 		for (BoardPoint p : piece.getPiecePoints()) {
-			if (board[p.getX()][p.getY()]) {
+			if (board[p.getY()][p.getX()]) {
 				return true;
 			}
 		}
