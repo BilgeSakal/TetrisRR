@@ -82,7 +82,7 @@ public abstract class Piece {
 			x += xWeight;
 			y += yWeight;
 
-			newPiece.piecePoints.set(i, new BoardPoint((int) x, (int) y));
+			newPiece.piecePoints.set(i, new BoardPoint((int) Math.round(x), (int) Math.round(y)));
 		}
 		return newPiece;
 	}
