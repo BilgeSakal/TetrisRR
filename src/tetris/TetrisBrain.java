@@ -1,19 +1,13 @@
 package tetris;
 
-import java.util.ArrayList;
 import java.util.Random;
 
 import enums.TetrisDirectionsEnum;
 import piece.Piece;
-import piece.PieceJ;
-import piece.PieceL;
-import piece.PieceS;
-import piece.PieceSquare;
-import piece.PieceStick;
-import piece.PieceT;
-import piece.PieceZ;
 
 public class TetrisBrain {
+
+	private static final Random RANDOM = new Random();
 
 	private Piece curPiece;
 	private Piece nextPiece;
@@ -21,8 +15,6 @@ public class TetrisBrain {
 	private DropTimer dropTimer;
 	private int boardWidth;
 	private int boardHeight;
-	private Random random = new Random();
-	private static final int PIECE_COUNT = 7;
 
 	/**
 	 * 
@@ -93,18 +85,8 @@ public class TetrisBrain {
 	}
 
 	public Piece getRandomPiece() {
-		Random random = new Random();
-		int r = random.nextInt(7);
-		ArrayList<Piece> pieces = new ArrayList<Piece>();
-		pieces.add(new PieceJ());
-		pieces.add(new PieceL());
-		pieces.add(new PieceS());
-		pieces.add(new PieceSquare());
-		pieces.add(new PieceStick());
-		pieces.add(new PieceT());
-		pieces.add(new PieceZ());
-		Piece randomPiece = pieces.get(r);
-		int randomRotate = random.nextInt(4);
+		Piece randomPiece = Piece.getRandomPiece();
+		int randomRotate = RANDOM.nextInt(4);
 		for (int i = 0; i < randomRotate; ++i) {
 			randomPiece = randomPiece.rotate(TetrisDirectionsEnum.RIGHT);
 		}

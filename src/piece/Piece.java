@@ -1,17 +1,31 @@
 package piece;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Random;
 
 import enums.TetrisDirectionsEnum;
 
 public abstract class Piece {
 
-	public static int boardwidth = 12;
+	private static final ArrayList<Piece> ALL_PIECES = new ArrayList<Piece>(Arrays.asList(new PieceJ(), new PieceL(),
+			new PieceS(), new PieceT(), new PieceZ(), new PieceSquare(), new PieceStick()));
+	protected static final Random RANDOM = new Random();;
 	protected ArrayList<BoardPoint> piecePoints;
 
 	public Piece() {
 		piecePoints = new ArrayList<BoardPoint>();
 		generatePiece();
+	}
+
+	public static Piece getRandomPiece() {
+		int r = RANDOM.nextInt(ALL_PIECES.size());
+		try {
+			return (Piece) ALL_PIECES.get(r).clone();
+		} catch (CloneNotSupportedException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	/**
