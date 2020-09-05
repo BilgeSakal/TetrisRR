@@ -6,10 +6,10 @@ public class PieceS extends Piece {
 
 	@Override
 	public void generatePiece() {
-		piecePoints.add(new BoardPoint(boardwidth / 2, 0));
-		piecePoints.add(new BoardPoint(boardwidth / 2 + 1, 0));
-		piecePoints.add(new BoardPoint(boardwidth / 2 - 1, 1));
-		piecePoints.add(new BoardPoint(boardwidth / 2, 1));
+		piecePoints.add(new BoardPoint(0, 0));
+		piecePoints.add(new BoardPoint(1, 0));
+		piecePoints.add(new BoardPoint(-1, 1));
+		piecePoints.add(new BoardPoint(0, 1));
 	}
 
 	@Override
